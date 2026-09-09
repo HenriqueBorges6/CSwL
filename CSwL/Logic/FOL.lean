@@ -5,6 +5,8 @@ import Mathlib.Tactic.Use
 open Verso.Genre Manual
 open CSwLMeta
 
+set_option verso.code.warnLineLength 100
+
 #doc (Manual) "Lógica de predicados" =>
 %%%
 tag := "FOL"
