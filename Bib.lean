@@ -95,6 +95,15 @@ def keller1902 : Article where
   volume  := inlines!""
   number  := inlines!""
 
+def enderton2001 : Article where
+  title   := inlines!"A Mathematical Introduction to Logic"
+  authors := #[inlines!"Herbert B. Enderton"]
+  journal := inlines!"2ª edição. Harcourt/Academic Press, San Diego"
+  year    := 2001
+  month   := none
+  volume  := inlines!""
+  number  := inlines!""
+
 def FAA2025 : Article where
   title   := inlines!"Formalizing Analysis of Algorithms, Autumn 2025"
   authors := #[inlines!"Sorrachai Yingchareonthawornchai"]

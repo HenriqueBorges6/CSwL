@@ -230,6 +230,15 @@ state. Those two carry a structure of their own, and part 1's subheadings, one
 per connective, are that structure — a connective's introduction and elimination
 rules are what the section teaches.
 
+**The chapter's opening example is not CSwFP's.** The potassium/chlorine
+example that opens `PL.lean` — `K` for "traces of potassium were observed", `C`
+for "the sample contained chlorine", and the four compound sentences built from
+them — has no counterpart in CSwFP, whose chapter 4 opens with Sea Battle. It
+is adapted from the opening of Enderton's *A Mathematical Introduction to
+Logic*, and the prose cites it as such. Recorded here because the rest of parts
+2 and 3 *are* translations, and a reader of this document checking coverage
+would otherwise look for a source passage that does not exist.
+
 Two divergences inside the translated part. CSwFP gives the semantics in two
 sections, "Semantics of Propositional Logic" and "Propositional Reasoning in
 Haskell"; here they are one, because the separation does not survive the move:

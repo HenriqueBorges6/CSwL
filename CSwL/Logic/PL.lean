@@ -19,11 +19,11 @@ namespace PL
 
 # Introdução
 
-A lógica proposicional (ou cálculo sentencial) trata de fórmulas construídas a partir de variáveis proposicionais usando os conectivos `¬`, `∧`, `∨`, `→` e `↔`. Intuitivamente, uma variável proposicional `p` representa uma sentença ou proposição que pode ser verdadeira ou falsa. Queremos usar lógica proposicional para fugir das impressões das linguas naturais. Formalizar proposições e provas quando podemos concluir uma proposição a partir de outras proposições tomadas como premissas.
+A lógica proposicional (LP, ou cálculo sentencial) trata de fórmulas construídas a partir de variáveis proposicionais usando os conectivos `¬`, `∧`, `∨`, `→` e `↔`. Intuitivamente, uma variável proposicional `p` representa uma sentença ou proposição que pode ser verdadeira ou falsa. Queremos usar lógica proposicional para fugir das impressões das línguas naturais. Formalizar proposições e provas quando podemos concluir uma proposição a partir de outras proposições tomadas como premissas.
 
-Como primeiro exemplo, a sentença "traços de potássio foram observados" pode ser traduzida para a linguagem formal como o símbolo `K`. Já para a sentença fortemente relacionada "traços de potássio não foram observados", podemos usar `¬ K`. Aqui `¬` é o nosso símbolo de negação, lido como "não". Poderíamos também pensar em traduzir "traços de potássio não foram observados" por algum símbolo novo `J`, mas preferimos decompor sentenças em suas partes atômicas tanto quanto possível. Para uma sentença não relacionada, "a amostra continha cloro" escolhemo o símbolo `C`. Assim, as seguintes sentenças compostas podem ser formalizadas.
+Como primeiro exemplo, adaptado de {citet Bib.enderton2001}[], a sentença "traços de potássio foram observados" pode ser traduzida para a linguagem formal como o símbolo `K`. Já para a sentença fortemente relacionada "traços de potássio não foram observados", podemos usar `¬ K`. Aqui `¬` é o nosso símbolo de negação, lido como "não". Poderíamos também pensar em traduzir "traços de potássio não foram observados" por algum símbolo novo `J`, mas preferimos decompor sentenças em suas partes atômicas tanto quanto possível. Para uma sentença não relacionada, "a amostra continha cloro" escolhemos o símbolo `C`. Assim, as seguintes sentenças compostas podem ser formalizadas.
 
-- A sentença "Se traços de potássio foram observados, então a amostra não continha cloro." é formalizada como `(K → (¬C))` com símbolo `→` significando "if ... then ...".
+- A sentença "Se traços de potássio foram observados, então a amostra não continha cloro." é formalizada como `(K → (¬C))` com símbolo `→` significando "se ... então ...".
 - A sentença "A amostra continha cloro, e traços de potássio foram observados." é formalizada como `(C ∧ K)` com símbolo `∧` significando a conjunção "e".
 - A sentença "Ou traços de potássio não foram observados, ou a amostra não continha cloro." formalizamos como `((¬K) ∨ (¬C))` com símbolo `∨` significando a disjunção "ou".
 - E a sentença "Nem a amostra continha cloro, nem traços de potássio foram observados." é formalizada como `(¬(C ∨ K))` ou `((¬C) ∧ (¬K))`, são *equivalentes*.
@@ -45,22 +45,22 @@ Sempre que nos é dada a verdade ou falsidade das partes atômicas de uma senten
   * F
   * T
   * F
-  * T
-*
-  * T
-  * F
-  * F
   * F
 *
   * T
   * F
+  * F
+  * F
+*
+  * T
+  * T
   * F
   * F
 :::
 
 ::::quiz
 Três irmãs - Ana, Maria e Cláudia — foram a uma festa com vestidos de cores
-diferentes. Uma vestiu azul, a outra pranco, e a terceira, preto.
+diferentes. Uma vestiu azul, a outra branco, e a terceira, preto.
 
 Chegando à festa, o anfitrião perguntou quem era cada uma delas.
 
@@ -68,7 +68,7 @@ Chegando à festa, o anfitrião perguntou quem era cada uma delas.
 - A de branco disse: "Eu sou Maria";
 - A de preto respondeu: "Cláudia é quem está de branco".
 
-O anfitrião foi capaz cada irmã considerando que:
+O anfitrião foi capaz de identificar cada irmã considerando que:
 
 - Ana sempre diz a verdade;
 - Maria às vezes diz a verdade;
@@ -80,19 +80,19 @@ Ana é quem veste preto, Cláudia quem veste branco e Maria quem veste azul.
 
 ::::
 
-Podemos formalizar o problema anterior em LP.  Uma das motivação é tornar a argumentação  precisa e convincente e, se possível, mecânica.
+Podemos formalizar o problema anterior em LP.  Uma das motivações é tornar a argumentação  precisa e convincente e, se possível, mecânica.
 
 Para isso, primeiro precisamos identificar as proposições mais elementares do problema e associar cada proposição a um símbolo. Em seguida, precisamos formalizar cada afirmação (ou enunciado) do problema como uma fórmula em LP. Vamos chamar de `Γ` o conjunto destas fórmulas. Também precisamos formalizar a resposta em uma fórmula em LP, vamos chamar de `α`.
 
-Finalmente, precisamos de um método para definir se a fórmula `α` é *consequência* das premissas `Γ`. Um dos métodos possíveis é semântico. Quando para toda possível escolha de valores verdade para os símbolos proposicionais, sempre que todas as premissas forem *verdade* a conclusão deve ser *verdade*. Usamos a notação `Γ ⊧ α` para indicar que `α` é consequência  das premissas.
+Finalmente, precisamos de um método para definir se a fórmula `α` é *consequência lógica* das premissas `Γ`. Um dos métodos possíveis é semântico. Quando para toda possível escolha de valores verdade para os símbolos proposicionais, sempre que todas as premissas forem *verdade* a conclusão deve ser *verdade*. Usamos a notação `Γ ⊧ α` para indicar que `α` é consequência lógica  das premissas.
 
-No problema dos vestidos, o número de personagens e atributos é finito, portanto há apenas um número finito de possíveis proposições. Os números também são pequenos o suficiente para que análise sistemática de todas as combinações de valores verdade seja possível. Para demonstrar que todo número par maior que dois pode ser escrito como uma soma de números primos esta estratégia não seria válida.
+No problema dos vestidos, o número de personagens e atributos é finito, portanto há apenas um número finito de possíveis proposições. Os números também são pequenos o suficiente para que análise sistemática de todas as combinações de valores verdade seja viável na prática. Para demonstrar que todo número par maior que dois pode ser escrito como uma soma de dois números primos esta estratégia não seria válida.
 
 # Lógica Proposicional em Lean
 
 O Lean possui `Prop`, como tipo predefinido, cujos elementos são proposições. Os conectivos lógicos  `∧`, `∨`, `→`, `↔` e `¬` estão disponíveis diretamente no Lean, de modo que uma fórmula proposicional pode ser representada como uma proposição em Lean. Isso nos fornece uma ponte conveniente entre a semântica da linguagem natural e o raciocínio formal. Podemos traduzir o conteúdo semântico de uma sentença para uma proposição em Lean e, em seguida, usar Lean para verificar se uma conclusão decorre de um conjunto de hipóteses.
 
-Continuando a partir do quiz anterior. Para começar, vamos introduzir variábeis do tipo `Prop`, cada uma delas representado uma proposição. São 3 pessoas e 3 cores. Vamos representar "Ana veste azul" por `Aa` e assim por diante.
+Continuando a partir do quiz anterior. Para começar, vamos introduzir variáveis do tipo `Prop`, cada uma delas representado uma proposição. São 3 pessoas e 3 cores. Vamos representar "Ana veste azul" por `Aa` e assim por diante.
 
 ```lean
 variable (
@@ -106,7 +106,7 @@ A ideia é que as condições do problema sejam traduzidas em fórmulas proposic
 #check Aa ∨ Ab ∨ Ap
 ```
 
-Aqui cabe a observação de que a formalização em LP não foi obtida diretamente a partir da construção linguística original, uma oração coordenando seus constituintes no predicado. Intuitivamente, a sentença foi antes interpretada como três orações coordenadas (proposições completas), "Ana veste azul ou Ana vestre branco ou Ana veste preto".
+Aqui cabe a observação de que a formalização em LP não foi obtida diretamente a partir da construção linguística original, uma oração coordenando seus constituintes no predicado. Intuitivamente, a sentença foi antes interpretada como três orações coordenadas (proposições completas), "Ana veste azul ou Ana veste branco ou Ana veste preto".
 
 A formalização completa do problema deve levar em consideração não apenas o que foi dito explicitamente mas algumas condições implicitamente assumidas. Definimos a estrutura `Premissas` por conveniência, ao invés de uma variável por premissa.
 
@@ -151,7 +151,7 @@ theorem vestidos (h : Premissas Aa Ab Ap Ma Mb Mp Ca Cb Cp)
   : Ap ∧ Cb ∧ Ma := sorry
 ```
 
-Consultar o tipo deste teorema com `#check vestidos` nos revela que ele tem o formato de uma implicação, que pode ser lido como `Γ ⊢ α` Do conjunto `Γ` de premissas em `Premissas` posso *derivar* `Ap ∧ Cb ∧ Ma`. A leitura é sintática. Podemos construir a prova de `α` a partir da aplicação de regras de dedução a partir das fómulas de `Γ`.
+Consultar o tipo deste teorema com `#check vestidos` nos revela que ele tem o formato de uma implicação, que pode ser lido como `Γ ⊢ α` Do conjunto `Γ` de premissas em `Premissas` posso *derivar* `Ap ∧ Cb ∧ Ma`. A leitura é sintática. Podemos construir a prova de `α` a partir da aplicação de regras de dedução a partir das fórmulas de `Γ`.
 
 Chamamos "sistema dedutivo" um conjunto das regras de dedução. Existem vários sistemas dedutivos. A formalização de Prop em Lean corresponde a implementação do sistema chamado *dedução natural* definido por Gerhard Gentzen em 1930s.
 
@@ -320,7 +320,7 @@ end
 ::::
 
 ::::exercise (rating := 2) (name := "dresses")
-Complete a prova do teorema que resposta do quiz anterior.
+Complete a prova do teorema que responde o quiz anterior.
 
 ```lean
 theorem vestidos₁ (h : Premissas Aa Ab Ap Ma Mb Mp Ca Cb Cp)
@@ -414,7 +414,7 @@ inductive Form where
   deriving DecidableEq
 ```
 
-Vale observar que a biblioteca `cslib` define o tipo `Cslib.Logic.PL.Proposition` que poderia ser usado nesta seção, mas isto introduziria uma complexidade desnecessária. Acima escolhemos não declarar os símbolos `→` e `↔` como construtores do tipo, eles serão funçòes que criam `Form` a partir de `Form`.
+Vale observar que a biblioteca `cslib` define o tipo `Cslib.Logic.PL.Proposition` que poderia ser usado nesta seção, mas isto introduziria uma complexidade desnecessária. Acima escolhemos não declarar os símbolos `→` e `↔` como construtores do tipo, eles serão funções que criam `Form` a partir de `Form`.
 
 ```lean
 def Form.impl (f g : Form) : Form := .disj (.neg f) g
@@ -560,7 +560,7 @@ def Form.eval (f : Form) (v : Valuation) : Bool :=
   | .disj g h => g.eval v || h.eval v
 ```
 
-Chamamos de *tautologias* (válidas) as fórmulas que são sempre verdade, independente da valoração. A notação usual para "`α` é uma tautologia" é `⊨ α`. As fórmulas que são sempre falsas para toda valoração são chamadas de *contradições* (ou insatisfatíveis) e podemos concluir que se `α` é uma contradição, então `⊨ ¬ α` (sua negação é válida). Uma fórmula é *satisfatível* se há ao menos uma valoração que a torna verdadeira, escrevemos `⊭ α` se existe pelo menos uma valoração que torna `α` falsa. Uma fórmula é *contingente* se é satisfatível mas não é uma tautologia. Toda tautologia é satisfatível, mas nem toda fórmula satisfatível é uma tautologia.
+Chamamos de *tautologias* (válidas) as fórmulas que são sempre verdade, independente da valoração. A notação usual para "`α` é uma tautologia" é `⊨ α`. As fórmulas que são sempre falsas para toda valoração são chamadas de *contradições* (ou insatisfatíveis) e podemos concluir que se `α` é uma contradição, então `⊨ ¬ α` (sua negação é válida). Uma fórmula é *satisfatível* se há ao menos uma valoração que a torna verdadeira. Uma fórmula é *contingente* se é satisfatível mas não é uma tautologia. Toda tautologia é satisfatível, mas nem toda fórmula satisfatível é uma tautologia.
 
 ```lean
 def taut  : Form :=  (.disj (.atom "p") (.neg (.atom "p")))
@@ -691,21 +691,15 @@ end ValuationTableEx
 ::::
 
 ::::exercise (rating := 1) (name := "negated-tautology")
-Explique por que a negação de uma tautologia é sempre uma contradição, e
-vice-versa.
+Explique por que a negação de uma tautologia é sempre uma contradição, e vice-versa.
 
 :::solution
-Uma fórmula `F` é tautologia quando `F.eval v = true` para toda `v`. Como
-`(Form.neg F).eval v = !(F.eval v)`, isso vale exatamente quando
-`(Form.neg F).eval v = false` para toda `v`, que é a definição de contradição.
-O argumento se lê igual nas duas direções.
+Uma fórmula `F` é tautologia quando `F.eval v = true` para toda `v`. Como `(Form.neg F).eval v = !(F.eval v)`, isso vale exatamente quando `(Form.neg F).eval v = false` para toda `v`, que é a definição de contradição. O argumento se lê igual nas duas direções.
 :::
-
 ::::
 
 ::::exercise (rating := 2) (name := "implies-list")
-Estenda a checagem de implicação proposicional para o caso de uma lista de
-premissas. O tipo é `Form.impliesL : List Form → Form → Bool`.
+Estenda a checagem de implicação proposicional para o caso de uma lista de premissas. O tipo é `Form.impliesL : List Form → Form → Bool`.
 
 ```lean
 def Form.impliesL (ps : List Form) (c : Form) : Bool :=
@@ -713,11 +707,22 @@ def Form.impliesL (ps : List Form) (c : Form) : Bool :=
 ```
 ::::
 
-# A ponte entre as duas leituras
+::::exercise (rating := 1) (name := "bangu-proof")
+Como podemos identificar os torcedores do Bangu e os não torcedores, supondo que todos os depoimentos são verdadeiros?
 
-O capítulo começou distinguindo raciocinar em lógica proposicional de raciocinar
-sobre fórmulas dela. Temos que `p ∧ q` é uma proposição, do tipo `Prop` e `Form.conj p q` é um termo (dado) do tipo `Form`. A ligação é uma função que interpreta cada fórmula como a proposição que ela
-afirma, dada uma valoração.
+:::solution
+```lean
+#eval Form.impliesL [depo1, depo2, depo3] A
+#eval Form.impliesL [depo1, depo2, depo3] J
+#eval Form.impliesL [depo1, depo2, depo3] C
+```
+:::
+::::
+
+
+# Traduzindo `Form` para `Prop`
+
+O capítulo começou distinguindo raciocinar em lógica proposicional de raciocinar sobre fórmulas dela. Temos que `p ∧ q` é uma proposição, do tipo `Prop` e `Form.conj p q` é um termo (dado) do tipo `Form`. A ligação é uma função que interpreta cada fórmula como a proposição que ela afirma, dada uma valoração.
 
 ```lean
 def Form.denote (f : Form) (v : Valuation) : Prop :=
@@ -730,10 +735,7 @@ def Form.denote (f : Form) (v : Valuation) : Prop :=
   | .disj g h => g.denote v ∨ h.denote v
 ```
 
-Repare no que cada caso faz: ele troca um construtor de `Form` pelo conectivo
-correspondente de `Prop`. O `conj` do dado vira o `∧` da proposição, o `neg` vira
-o `¬`. O teorema que fecha o capítulo diz que as duas leituras concordam: computar dá
-`true` exatamente quando a proposição vale.
+Repare no que cada caso faz: ele troca um construtor de `Form` pelo conectivo correspondente de `Prop`. O `conj` do dado vira o `∧` da proposição, o `neg` vira o `¬`. O teorema que fecha o capítulo diz que as duas leituras concordam: computar dá `true` exatamente quando a proposição vale.
 
 ```lean
 theorem Form.eval_iff_denote (f : Form) (v : Valuation) :
@@ -751,16 +753,6 @@ theorem Form.eval_iff_denote (f : Form) (v : Valuation) :
   | disj g h ihg ihh =>
       simp [Form.eval, Form.denote, ihg, ihh]
 ```
-
-::::exercise (rating := 1) (name := "bangu-proof")
-Identificar os torcedores do Bangu e os não torcedores, supondo que todos os depoimentos são verdadeiros.
-
-```lean
-#eval Form.impliesL [depo1, depo2, depo3] A
-#eval Form.impliesL [depo1, depo2, depo3] J
-#eval Form.impliesL [depo1, depo2, depo3] C
-```
-::::
 
 ```lean
 end PL

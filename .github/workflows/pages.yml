@@ -107,6 +107,16 @@ jobs:
         with:
           path: _site
 
+      # Also handed to the `release` job below, so the `book` repo
+      # (github.com/emap-nlp/book) can pick up the same build without
+      # rebuilding it — see that job's comment.
+      - name: Upload the student build (lean + html)
+        uses: actions/upload-artifact@v4
+        with:
+          name: student-build
+          path: _out/student
+          retention-days: 1
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -120,3 +130,38 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  # Publishes the same `student` build as a GitHub release in this repo, so
+  # that `github.com/emap-nlp/book` can fetch it (a public download, no
+  # credentials needed) and republish it on its own `main` (lean/) and
+  # `gh-pages` (html/) branches without rebuilding — see that repo's
+  # `.github/workflows/sync-from-cswl.yml`. `student-latest` is a moving
+  # tag: each run deletes and recreates it, so `book` always has one place
+  # to look.
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: student-build
+          path: _out/student
+
+      - name: Package the build
+        run: |
+          echo "${{ github.sha }}" > meta.txt
+          tar -czf lean.tar.gz -C _out/student/lean .
+          tar -czf html.tar.gz -C _out/student/html .
+
+      - name: Publish the student-latest release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh release delete student-latest --yes --cleanup-tag || true
+          gh release create student-latest lean.tar.gz html.tar.gz meta.txt \
+            --title "Student build (latest)" \
+            --notes "Auto-published student build from commit ${{ github.sha }}."
