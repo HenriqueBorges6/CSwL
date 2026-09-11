@@ -85,9 +85,6 @@ author decision, not a mechanical fix.
   nor the English code-comment rule.
 - **`trivial`** — one term-level use in `Sets.lean:507`, not presented
   anywhere. Give it a line or replace it when that chapter is revised.
-- **`Sets.lean` uses `Setoid`, `Fintype` and `Finset` with no presentation.**
-  A short paragraph plus a citation for each would settle it, under the
-  loosening `DEVIATIONS.md` describes.
 
 `IntroCS` is the constraint's one accepted exception: it uses Lean that
 `IntroL` only presents later, deliberately, and the chapter says so where its

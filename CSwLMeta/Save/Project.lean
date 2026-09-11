@@ -112,13 +112,13 @@ private def lakefileTemplate (vol : String) (v : Variant)
   "name = \"" ++ vol ++ "\"\n" ++
   libs
 
-/-- The `student` variant is the one the students receive, so its README is
-the whole set-up guide: how to build, how to work an exercise, how to report a
-problem. The other variants are read by the instructor, who has the repository
-itself, and get only the note saying where they came from.
-
-Written in English, like every other document about the project; only the
-book's prose is in Portuguese. -/
+/-- The `student` variant is the one the students receive, so its README is the
+  whole set-up guide: how to build, how to work an exercise, how to report a
+  problem. The `solutions` and `terse` variants are read by the instructor, who
+  has the repository itself, and get only the note saying where they came from.
+  The `grading` variant gets additional instructions for its private autograder
+  below. Written in English, like every other document about the project; only
+  the book's prose is in Portuguese. -/
 private def readmeTemplate (vol : String) (v : Variant) : String :=
   s!"# {vol} — `{v}` variant\n\n" ++
   "Generated from the book (Verso, `Manual` genre) by " ++

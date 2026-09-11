@@ -583,6 +583,10 @@ modelo a um fragmento — um domínio de entidades e, para cada verbo, a
 relação que ele denota — e à qual o tratamento de verbos de mais de dois
 lugares, e do escopo entre eles, volta mais tarde.
 
+:::dev "Alexandre (arademaker)"
+Estamos apresentando conceitos dentro do enunciado de um exercício. Talvez seja melhor evitar isso.
+:::
+
 ::::exercise (rating := 2) (name := "cartesian-square")
 
 Tome `A` como o conjunto `{Kasparov, Karpov, Anand}`. Encontre `A × A`.
