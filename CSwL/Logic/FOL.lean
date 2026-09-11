@@ -59,8 +59,8 @@ arbitrário e prove que vale para ele. É a mesma `intro` agora sobre um objeto 
 
 ```lean
 example (h : ∀ x, P x) : ∀ y, P y := by
-  intro y
-  exact h y
+  intro n
+  exact h n
 ```
 
 A introdução de `∃` exige exibir a testemunha. A tática `use` substitui a variável quantificada pelo objeto passado, e deixa como objetivo o que falta provar sobre ele.
