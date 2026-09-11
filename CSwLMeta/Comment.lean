@@ -77,10 +77,13 @@ def decodeDevData? (data : Json) : Option (Option String × Option String × Opt
     some (str? a, str? u, nat? y)
   | _ => none
 
-/-- Should a dev note surface in reader-facing outputs (the HTML book and the
-generated `.lean` files)?  Only *actionable* notes are shown: those with urgency
-`NOW` or `BeforeNextRelease`, or with no urgency at all.  `PotentialImprovement`
-notes remain suppressed. -/
+/-- Should a dev note be rendered at all, in the variants that keep it (every
+one but `student`)?  Only *actionable* notes are: those with urgency `NOW` or
+`BeforeNextRelease`, or with no urgency at all.  `PotentialImprovement` notes
+remain suppressed.
+
+This is the second of two filters and is about urgency alone; which variants
+keep a note is decided in `Block.devcomment`'s `traverse`. -/
 def devNoteShown (urgency : Option String) : Bool :=
   match urgency with
   | none => true
@@ -98,8 +101,9 @@ def devUrgencyText (urgency : String) : String :=
 /-- Label for a rendered dev note —
 `Nota editorial (Alexandre Rademaker, before next release, 2026)` — with
 absent fields omitted.  The heading names the note without naming the source
-this book adapts: `CSwL` is self-contained, and a rendered note reaches every
-variant, the student one included. -/
+this book adapts, since `CSwL` is self-contained: the note does not reach the
+student build, but it does reach the `terse` one the instructor opens in
+class. -/
 def devNoteLabel (author urgency : Option String) (year : Option Nat)
     (heading : String := "Nota editorial") : String :=
   let fields := author.toList ++ (urgency.map devUrgencyText).toList ++ (year.map toString).toList
@@ -107,17 +111,29 @@ def devNoteLabel (author urgency : Option String) (year : Option Nat)
   else s!"{heading} ({String.intercalate ", " fields})"
 
 /-! `Block.devcomment` carries the note body as its children and records its
-author/urgency metadata in `data`. All notes survive traversal (the CSwL has
-no student/solutions split on this block — every variant is a "reader" of the
-book). Among the surviving blocks, a note is rendered only when its urgency
-passes `devNoteShown` (`NOW`, `BeforeNextRelease`, or none): highlighted in the
-HTML book, and passed through as a labelled comment in generated `.lean` files
-by `CSwLMeta.Save.Extract.walkBlock`.  `PotentialImprovement` notes render
+author/urgency metadata in `data`.
+
+A dev note is addressed to the book's authors, so **no note survives traversal
+in the `student` variant** — neither the HTML nor the generated `.lean`, since
+both are produced from the per-variant traversed tree. The other three
+variants keep every note: `solutions` and `grading` are the authors' own, and
+`terse` is the instructor's, where a note on screen during a class is
+harmless.
+
+Among the surviving blocks, a note is rendered only when its urgency passes
+`devNoteShown` (`NOW`, `BeforeNextRelease`, or none): highlighted in the HTML
+book, and passed through as a labelled comment in generated `.lean` files by
+`CSwLMeta.Save.Extract.walkBlock`.  `PotentialImprovement` notes render
 nothing. -/
 block_extension Block.devcomment (author : Option String)
     (urgency : Option String) (year : Option Nat) where
   data := Json.arr #[toJson author, toJson urgency, toJson year]
-  traverse _ _ _ := return none
+  traverse _ _ _ := do
+    if (← getCurrVariant).isStudent then
+      -- Dev notes are for the authors; the student build gets none of them.
+      return some (.concat #[])
+    else
+      return none
   toHtml :=
     open Verso.Output.Html in
     some fun _ goB _ data contents => do

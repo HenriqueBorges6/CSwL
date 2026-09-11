@@ -173,9 +173,26 @@ Prose can be routed to a variant:
 
 ### Notes and commentary
 
-- `:::dev` — an internal note to the authors. It renders with the heading
-  "Nota editorial" and must never carry anything the student should not read.
-  AI-generated commentary belongs here and is marked as such.
+- `:::dev` — an internal note to the authors, rendered under the heading
+  "Nota editorial". AI-generated commentary belongs here, and is marked as
+  such.
+
+  It takes an optional author (a string, as `Full Name (github-handle)`), an
+  optional urgency (`NOW`, `BeforeNextRelease` or `PotentialImprovement`, a
+  bare identifier), and an optional `(year := N)`.
+
+  Two filters decide where a note appears, and they are independent:
+
+  - **By variant**, in `Block.devcomment`'s `traverse`: the `student` build
+    drops every note, from the HTML and from the generated `.lean` alike.
+    `terse`, `solutions` and `grading` keep them all — `terse` is the
+    instructor's, so a note on screen during a class is harmless.
+  - **By urgency**, in `devNoteShown`: a `PotentialImprovement` note renders
+    nothing even where it is kept. Notes marked `NOW` or `BeforeNextRelease`,
+    and unmarked ones, render.
+
+  So a dev note never reaches a student, and nothing in one has to be written
+  with a student in mind.
 - `:::quiz` and `:::quizSolution` — a comprehension check.
 - `:::diagramWithAlt` — a diagram with its textual alternative, for
   accessibility.
