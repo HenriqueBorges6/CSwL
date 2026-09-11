@@ -112,15 +112,49 @@ private def lakefileTemplate (vol : String) (v : Variant)
   "name = \"" ++ vol ++ "\"\n" ++
   libs
 
+/-- The `student` variant is the one the students receive, so its README is
+the whole set-up guide: how to build, how to work an exercise, how to report a
+problem. The other variants are read by the instructor, who has the repository
+itself, and get only the note saying where they came from.
+
+Written in English, like every other document about the project; only the
+book's prose is in Portuguese. -/
 private def readmeTemplate (vol : String) (v : Variant) : String :=
-  s!"# {vol} — variante `{v}`\n\n" ++
-  "Gerado a partir do livro (Verso, gênero `Manual`) por " ++
-  s!"`lake exe cswl-book {v}` — **não edite aqui**: a fonte é o `CSwL`.\n\n" ++
-  (if v.isGrading then
-    "Esta variante traz as provas completas e os atributos " ++
-    "`[autogradedProof …]`. Para corrigir uma entrega:\n\n" ++
-    "    lake exe autograder --local <entrega> <arquivo deste projeto>\n\n" ++
-    "Ela nunca sai do repositório privado.\n"
+  s!"# {vol} — `{v}` variant\n\n" ++
+  "Generated from the book (Verso, `Manual` genre) by " ++
+  s!"`lake exe cswl-book {v}` — **do not edit here**: the source is `{vol}`, " ++
+  "and the next build overwrites this directory.\n\n" ++
+  (if v.isStudent then
+    "## Setting up\n\n" ++
+    "Install Lean with [elan](https://lean-lang.org/install). Then, in this\n" ++
+    "directory, fetch the prebuilt Mathlib and build:\n\n" ++
+    "    lake exe cache get\n" ++
+    "    lake build\n\n" ++
+    "`lake exe cache get` matters: without it, `lake build` compiles all of\n" ++
+    "Mathlib from scratch.\n\n" ++
+    "Use VS Code with the Lean 4 extension, and open **this directory** as\n" ++
+    "the folder — not a file inside it, or the extension will not find the\n" ++
+    "project.\n\n" ++
+    "## Working the exercises\n\n" ++
+    "Each exercise is a `sorry` to replace. Lean checks your answer as you\n" ++
+    "type: while a `sorry` remains, the file reports a warning, and when the\n" ++
+    "proof or definition is complete the warning disappears. The InfoView\n" ++
+    "panel shows the goal at the cursor.\n\n" ++
+    "The exercises are in the same order as the book, and each one sits in\n" ++
+    "the chapter section that discusses it. Read the corresponding section\n" ++
+    "of the book alongside the code.\n\n" ++
+    "Keep your own copy of anything you want to survive: this directory is\n" ++
+    "regenerated from the book, and a rebuild overwrites whatever is here.\n\n" ++
+    "## Reporting a problem\n\n" ++
+    "If something does not build, a statement is ambiguous, or the prose is\n" ++
+    "wrong, open an issue at\n" ++
+    "<https://github.com/cslib-community/CSwL/issues>. Say which chapter and\n" ++
+    "which exercise, and paste the message Lean gave you.\n"
+   else if v.isGrading then
+    "This variant carries the complete proofs and the `[autogradedProof …]`\n" ++
+    "attributes. To grade a submission:\n\n" ++
+    "    lake exe autograder --local <submission> <file in this project>\n\n" ++
+    "It never leaves the private repository.\n"
    else "")
 
 /-- Writes the generated project to `dest`: the extracted files, plus

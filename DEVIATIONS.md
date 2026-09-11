@@ -61,7 +61,7 @@ The exception: `IntroCS.lean`, described in that chapter's section below.
 Everywhere else, a construct in a code block is one an earlier chapter has
 presented.
 
-This document is the migration plan: which CSwFP sections each `CSwL` chapter consumes, in which order, and what each chapter presupposes. The order below is the book's order; the dependency columns are what justify it. Everything through CSwFP/6 is settled — where a section records a decision, that decision is made, not proposed. What remains is execution, tracked in `TODO.md`. Exercise-level correspondence with CSwFP is in `PROVENANCE.md`.
+This document is the migration plan: which CSwFP sections each `CSwL` chapter consumes, in which order, and what each chapter presupposes. The order below is the book's order; the dependency columns are what justify it. Everything through CSwFP/6 is settled — where a section records a decision, that decision is made, not proposed. What remains is execution, tracked in [GitHub issues](https://github.com/cslib-community/CSwL/issues). Exercise-level correspondence with CSwFP is in `PROVENANCE.md`.
 
 The current state of CSwL need major review to fulfill all decisions from this document.
 
@@ -353,7 +353,7 @@ CSwFP/7 (The Composition of Meaning in Natural Language) goes after `ModelChecki
 
 A proof system as data — CSLib's `Cslib.Logic.PL.Theory.Derivation` — is deferred rather than rejected, for the reasons in the `Logic.lean` section. It becomes attractive exactly where `CSwL` would have something to give back: CSLib has the derivations but no propositional semantics, and this book builds the valuation. Soundness — every derivable sequent is true under every valuation satisfying its context — needs both halves, and neither project has both today. `Cslib/Logics/README.md` invites exactly this ("we are interested in expanding them or creating new ones that can cover your use cases"). Its natural place is after `Sets.lean`, once relations and quantifiers are available. It stays out of the plan until CSwFP/1–6 are in place.
 
-Mathlib's `ContextFreeGrammar` for the grammars of `Games.lean` is deferred on the same footing, and for reasons that are ours rather than the library's — see "Reusing Mathlib and CSLib". It is the one deferred item that would change a chapter already written, so it belongs after the pending work in `TODO.md`, not before it.
+Mathlib's `ContextFreeGrammar` for the grammars of `Games.lean` is deferred on the same footing, and for reasons that are ours rather than the library's — see "Reusing Mathlib and CSLib". It is the one deferred item that would change a chapter already written, so it belongs after the pending work already tracked, not before it.
 
 The related question — whether `PL.lean`'s valuation is written in CSLib's shape from the start — is settled above, and settled against it.
 

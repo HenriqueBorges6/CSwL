@@ -66,15 +66,19 @@ exercises not reused later in the chapter itself).
 
 ## Conventions
 
-Mnemonic file names. A short chapter is a single file (`CSwL/Sets.lean`,
-`namespace Sets`); a chapter whose sections are long enough to deserve
-their own file is a "glue" file (`CSwL/Games.lean`) that only gathers, via
-`{include 1 ...}`, sections living in a same-named directory
+Mnemonic file names, never numbers. A short chapter is a single file
+(`CSwL/Sets.lean`, `namespace Sets`); a chapter whose sections are long enough
+to deserve their own file is a "glue" file (`CSwL/Games.lean`) that only
+gathers them, via `{include 1 ...}`, from a same-named directory
 (`CSwL/Games/SeaBattle.lean`, `CSwL/Games/Mastermind.lean`) — the same pattern
-used by [Functional Programming in Lean](https://lean-lang.org/functional_programming_in_lean/). Each content file has its own `namespace`, 
-mnemonic and necessary: the book redefines the same names in different chapters.
+used by [Functional Programming in Lean](https://lean-lang.org/functional_programming_in_lean/).
 
 CSwL developments connect with those in [CSLib](https://github.com/leanprover/cslib/) where possible. We aim to reuse CSLib and contribute to CSLib.
+
+The normative conventions are in [STYLE-CODE.md](STYLE-CODE.md) (Lean and
+Verso, including which Lean feature each chapter is allowed to use) and
+[STYLE-WRITING.md](STYLE-WRITING.md) (prose, pedagogy, and Portuguese).
+[CONTRIBUTING.md](CONTRIBUTING.md) covers workflow.
 
 ## Deviations from CSwFP
 

@@ -64,11 +64,20 @@ AI-usage disclosure paragraph at the end of commit messages is important wheneve
 When migrating material, AI should try to translate (English to Portuguese) but not rewrite or invent new text. Only humans should deviate from the original CSwFP texts.
 
 
-# Pedagogical decisions
+# Style guides
 
-We will avoid fragmented presentation of material. That is why we will largely reorder CSwFP.
+The normative conventions live in two files, which are to be read in addition
+to this one. **Read both in full before creating or editing any file that ends
+up in the book**; everything you write must conform to them.
 
-We should avoid presenting definitions that will be rephrased later, with the same name that in another chapter would have a new definition. Eventually, namespaces would avoid conflicts, but students may get confused. But exceptions can occur.
+- `STYLE-CODE.md` — Lean code and Verso markup: the ledger of which Lean
+  feature is first used in which chapter (the book's hard constraint is that
+  nothing is used before it is presented), the directive vocabulary, the build
+  variants, and naming.
+- `STYLE-WRITING.md` — prose: the project's pedagogical decisions, writing
+  advice, and the Portuguese conventions including the term list.
 
-We will never discuss `haskell vs Lean` decisions in the book. The reader does not necessarily know Haskell and should not worry about it. We also do not expect the reader to have read the original CSwFP. This book is self-contained. As a result, we never mention CSwFP sections, pages, etc.
+`CONTRIBUTING.md` covers workflow. `DEVIATIONS.md` records what departs from
+CSwFP and why. In case of conflict, the style guides win on style and this
+file wins on project scope.
 
