@@ -35,9 +35,9 @@ exercises:
     2.12 (p. 21): graph-is-functional
     2.13 (p. 26): TODO, was `twice`, no longer in the book
     2.14 (p. 26): in the prose of IntroL
-    2.15 (p. 28): TODO, typing of lambda terms, goes with 2.5 to English
+    2.15 (p. 28): dropped with the typing rules of 2.5
     2.16 (p. 28): in the prose of IntroL
-    2.17 (p. 30): TODO, was `adjective-types`, no longer in the book
+    2.17 (p. 30): dropped with the categorial section of 2.5
 
   CSwFP/3:
     3.1 (p. 36): about Haskell itself
@@ -66,9 +66,9 @@ exercises:
     4.3 (p. 67): dropped with Mastermind
     4.4 (p. 67): dropped with Mastermind
     4.5 (p. 68): TODO
-    4.6 (p. 69): TODO
-    4.7 (p. 69): preposition-phrase        # pending #29
-    4.8 (p. 69): complex-relative-clauses  # pending #29
+    4.6 (p. 69): absorbed, since `ADJ` has happy and evil from its declaration
+    4.7 (p. 69): preposition-phrase
+    4.8 (p. 69): complex-relative-clauses
     4.9 (p. 74): bangu-form
     4.10 (p. 74): exclusive-or
     4.11 (p. 74): needs Mathlib's ContextFreeGrammar
@@ -112,8 +112,8 @@ exercises:
     5.23 (p. 104): in the prose of Logic/FOL
     5.24 (p. 104): ex-fol-consequence
     5.25 (p. 105): ex-fol-entails
-    5.26 (p. 106): TODO
-    5.27 (p. 106): TODO
+    5.26 (p. 106): check-sentence is the mechanised form of the same question
+    5.27 (p. 106): fragment-translations
     5.28 (p. 109): soundness is within reach, completeness needs a model construction
     5.29 (p. 109): soundness is within reach, completeness needs a model construction
     5.30 (p. 110): TODO
@@ -121,13 +121,13 @@ exercises:
     5.32 (p. 115): TODO
 
   CSwFP/6:
-    6.1 (p. 137): help-defeat             # pending #29
-    6.2 (p. 137): TODO
-    6.3 (p. 138): TODO
-    6.4 (p. 139): reflexive-ditransitive  # pending #29
-    6.5 (p. 141): TODO
-    6.6 (p. 146): TODO
-    6.7 (p. 147): check-sentence          # pending #29
+    6.1 (p. 137): help-defeat
+    6.2 (p. 137): passivize is presented in the prose, as the motivation for Unspec
+    6.3 (p. 138): passivize is presented in the prose, as the motivation for Unspec
+    6.4 (p. 139): reflexive-ditransitive
+    6.5 (p. 141): TODO, goes with 6.5 to Logic/FOL
+    6.6 (p. 146): TODO, goes with 6.5 to Logic/FOL
+    6.7 (p. 147): check-sentence
 
 original:
   IntroL.lean: [sum-of-squares, sum-to, sum-list, count-zeros]
@@ -160,12 +160,12 @@ original:
   Morphology/Phonemes.lean: [append-suffix-text]
   Morphology/SwedishPlural.lean: [swedish-plural]
   InfEngine.lean: [inconsistent-kb, ferio]
-  English.lean: [fragment-translations]  # pending #29
 
 depends:
   bangu-proof: bangu-form
   pl-consequence: implies-from-list
   ex-fol-entails: ex-fol-implies-from-list
+  help-defeat: check-sentence
 
 sections:
 
@@ -184,11 +184,11 @@ sections:
     2.4 Lambda calculus:
       to: IntroL
       why: With Lean already on screen, lambda calculus is the theory of what
-        the reader has just written. Its linguistic example goes to English.
+        the reader has just written. Its linguistic example is dropped, with 2.5.
     2.5 Types in Grammar and Computation:
-      to: English
-      why: The semantic types e and t and the typing rules are about the
-        fragment, and are shown over its own types.
+      to: dropped
+      why: 6.1 makes the same point in English, that a proper name translates
+        as λP ↦ P g. Making it twice would fragment the presentation.
     2.6 Functional Programming:
       to: absorbed
       why: It bridges to a programming language the reader has already seen.
@@ -211,8 +211,8 @@ sections:
     3.12 Identifiers in Haskell: omitted
     3.13 User-defined Data Types and Pattern Matching:
       to: IntroL
-      why: Its Subject/Predicate example goes to English, so that no fragment
-        of natural language appears before the one English builds.
+      why: Its Subject/Predicate example is dropped, so that no fragment of
+        natural language appears before the one English builds.
     3.14 Application, Representing Phonemes: Morphology
     3.15 Further Reading: omitted
 
@@ -243,7 +243,10 @@ sections:
       to: Logic/FOL
       why: The model is the four-vertex graph of Enderton, since the model of
         6.3 belongs with the fragment it interprets.
-    5.6 Semantics of Natural Language Fragments: English
+    5.6 Semantics of Natural Language Fragments:
+      to: English
+      why: Only its exercise 5.27 is kept. Its translation key is superseded by
+        6.2, which computes the translation.
     5.7 An Inference Engine with a Natural Language Interface:
       to: InfEngine
       why: The natural-language input, the only use of IO in the book, is not
@@ -251,10 +254,13 @@ sections:
     5.8 Further Reading: omitted
 
   CSwFP/6:
-    6.1 Linguistic Form and Translation Into Logic: English
+    6.1 Linguistic Form and Translation Into Logic: English, before 4.2
     6.2 Predicate Logic as Representation Language: English
     6.3 Representing a Model for Predicate Logic: English
-    6.4 Evaluating Formulas in Models: English
+    6.4 Evaluating Formulas in Models:
+      to: English
+      why: Absorbed. Its interpretation, assignments and eval are already in
+        Logic/FOL, so English adds only the model and checkSentence.
     6.5 Evaluating Formulas with Structured Terms:
       to: Logic/FOL
       why: It is about the evaluator, not the fragment. The evaluation over

@@ -97,6 +97,24 @@ def keller1902 : Article where
   volume  := inlines!""
   number  := inlines!""
 
+def carroll1865 : Article where
+  title   := inlines!"Alice in Wonderland"
+  authors := #[inlines!"Lewis Carroll"]
+  journal := inlines!"Macmillan, Londres"
+  year    := 1865
+  month   := none
+  volume  := inlines!""
+  number  := inlines!""
+
+def russell1905 : Article where
+  title   := inlines!"On Denoting"
+  authors := #[inlines!"Bertrand Russell"]
+  journal := inlines!"Mind"
+  year    := 1905
+  month   := none
+  volume  := inlines!"14"
+  number  := inlines!"56"
+
 def enderton2001 : Article where
   title   := inlines!"A Mathematical Introduction to Logic"
   authors := #[inlines!"Herbert B. Enderton"]

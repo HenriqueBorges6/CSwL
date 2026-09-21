@@ -82,13 +82,16 @@ this way is usually a mistake; see "Known gaps."
 | `SeaBattle` | inductive predicate (`inductive WellFormed : Game → Prop where`) | structure fields that carry proofs, bounded `∀ x ∈ xs`, `by` as a structure-field value, `Fin.val`, dependent `if h : … then … else` **(solution only)**, `▸` **(solution only)** | *(none new)* |
 | `Morphology` | `open` of constructor namespaces (`open Attr Value`) | `match e₁, e₂ with` (first use outside a solution), `mapM` over `Option` **(solution only)** | *(none new)* |
 | `InfEngine` | `let rec` | `do`-notation, `ToString` and its instance, `s!` strings | — |
-| `English` | `mutual` over `inductive` types (`Logic/FOL` only uses it over `def`) | guillemet identifiers (`«with»`) | *(none new)* |
+| `English` | `mutual` over `inductive` types (`Logic/FOL` only uses it over `def`) | guillemet identifiers (`«with»`), pattern-matching `fun \| … => …` (first use outside a solution) | *(none new)* |
 
 `English` is where `abbrev` and `ToString` instances become the dominant
 idiom, but both arrive earlier; what is genuinely new there is the mutually
 recursive *grammar*, a `mutual` block over `inductive` declarations rather
 than over `def`s, and `«with»`, which quotes a Lean keyword so it can be used
-as a constructor name.
+as a constructor name. The pattern-matching `fun` — `fun | .a => "a" | …`,
+with no `match` — first appears in `IntroL` and `Logic/PL`, both times inside
+a `solution!`, so `English`'s `ToString` instances are where a student first
+meets it in ordinary code.
 
 The table records features, not every piece of notation. Type ascription,
 list literals, projection dots, and the like are not tracked: they arrive with
@@ -141,7 +144,9 @@ author decision, not a mechanical fix.
   ordinary code — `|>` at `FOL.lean:369` and `match e₁, e₂ with` at
   `Morphology/Phonemes.lean:227`. `mapM` is the same shape: first used inside
   a solution (`Phonemes.lean:309`) and visible only much later, at
-  `InfEngine.lean:439`. The rest never surface at all.
+  `InfEngine.lean:439`. The pattern-matching `fun` is the same shape again —
+  `IntroL.lean:364` and `PL.lean:245`, both in solutions, then ordinary code
+  throughout `English`. The rest never surface at all.
 
 `IntroCS` is the constraint's one accepted exception: it uses Lean that
 `IntroL` only presents later, deliberately, and the chapter says so where its

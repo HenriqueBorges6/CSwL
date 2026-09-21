@@ -11,7 +11,7 @@ the decisions serve are in `STYLE-CODE.md` and `STYLE-WRITING.md`.
 CSwFP runs sets, lambda calculus and types (2) before Haskell (3). That works
 because its chapter 2 is prose. In Lean the same material is code, so the
 language has to come first, and chapter 2 is split: 2.3 and 2.4 into
-`IntroL`, 2.1 and 2.2 into `Sets`, 2.5 into `English`.
+`IntroL`, 2.1 and 2.2 into `Sets`; 2.5 is dropped.
 
 | Chapter      | Requires  | Why                                                                         |
 |--------------|-----------|-----------------------------------------------------------------------------|
@@ -22,7 +22,7 @@ language has to come first, and chapter 2 is split: 2.3 and 2.4 into
 | `SeaBattle`  | `Logic`   | its exercises prove theorems by induction on `WellFormed`                   |
 | `Morphology` | `IntroL`  | placed here so that its exercises may use tactics                           |
 | `InfEngine`  | `Sets`    | the language of 4.3 is about sets, and the syllogisms are proved over `Set` |
-| `English`    | `Sets`    | its categorial section interprets verbs over `Sets.Entity`                  |
+| `English`    | `Logic`   | it translates into `FOL`'s `Formula` and evaluates with its `eval`; best after `Sets`, whose characteristic functions build the model |
 
 CSwFP/6 is in `English`: it is built on the fragment of 4.2, whose
 categories it translates one by one. 
@@ -104,10 +104,30 @@ decisions inside the chapters.
 
 ### `English`
 
-Being written (#29). Planned: the semantic types are named `e` and `t`, since
-`NP`, `VP` and the other category names are the fragment's `inductive`s, and
-the typing rules of 2.5 are shown over the fragment's own types. `INF` is in
-the 4.2 grammar but has no translation in CSwFP/6.
+- The sections are 6.1, 4.2, 6.2, and 6.3 with 6.4. 6.2 translates the 4.2
+  grammar category by category, so the grammar comes first; 6.1 motivates the
+  translation, so it opens the chapter.
+- A Lean function is total, so the gaps `MCWPL.hs` leaves are decisions:
+  - `most` is not in `DET`: it has no first-order translation, as 6.2 says,
+    and the prose states the limitation. `a` is in `DET`, since 6.2 treats it.
+  - `AV`, `To`, `INF` and `TINF` are not in the grammar: they illustrate
+    intensionality, and 6.2 gives them no translation.
+  - `ADJ` is translated intersectively. That is right for *happy* and *evil*,
+    not for *fake*, and the prose says so.
+  - `caught` gets an atom like every transitive verb. The model does not
+    interpret it, so every sentence using it is false.
+- The grammar is extended by wrapping, not by redeclaring: a new category
+  containing the old one (`| base (np : NP)`) plus the new rules. The chapter
+  shows it on sentence coordination, and the exercises of 4.7 and 4.8 use it.
+  The extension is not recursive, and the new constructors never overlap with
+  the old ones.
+- Constructors are named for what they are (`npDet`, `rcnSubj`, `rcnObj`,
+  `vpTrans`), not numbered (`NP1`, `RCN2`).
+- The fairy-tale model of 6.3 is here, next to the grammar it interprets.
+  Predicates are `Entity → Bool`; `admire` and `defeat` are written as
+  conditions rather than list comprehensions; `Unspec` is the default of the
+  `FInterp`; and names and argument order agree with the translation, which
+  in the Haskell source they do not.
 
 ## Beyond CSwFP/6
 
