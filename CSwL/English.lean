@@ -21,37 +21,25 @@ namespace English
 tag := "english-form"
 %%%
 
-> — Não vejo ninguém na estrada — disse Alice.
->
-> — Quem dera eu tivesse olhos assim — observou o Rei, em tom lamentoso. — Poder ver Ninguém! E a essa distância, ainda por cima!
->
-> {citep Bib.carroll1865}[]
-
 Da sentença *Alice walked on the road* segue-se que alguém caminhou na estrada, mas de *No one walked on the road* não se segue que alguém caminhou na estrada. Por isso lógicos como Gottlob Frege (1848–1925), Bertrand Russell (1872–1970), Alfred Tarski (1902–1983) e Willard Van Orman Quine (1908–2000) sustentaram que a estrutura dessas duas sentenças tem de ser diferente, e que não basta dizer que ambas são composições de um sujeito e um predicado.
 
 Os lógicos que usaram a lógica de predicados de primeira ordem para analisar a estrutura lógica da língua natural se impressionaram com o fato de que as traduções lógicas de sentenças com expressões quantificadas não pareciam acompanhar a estrutura linguística. Nas traduções lógicas, as expressões quantificadas pareciam ter desaparecido. A tradução lógica de (1) não revela nenhum constituinte correspondente ao sintagma nominal quantificado que faz de sujeito.
 
-```display
-(1)  Every dwarf loved Goldilocks.
+1. Every dwarf loved Goldilocks.
+2. `∀x (Dwarf x → Love x g)`
 
-(2)  ∀x (Dwarf x → Love x g)
-```
+Na tradução (2) o constituinte *every dwarf* desapareceu; ele foi contextualmente eliminado. Frege observa que uma expressão quantificada como *every dwarf* não dá origem a um conceito por si só, e só pode ser interpretada no contexto da tradução da sentença inteira. Considerando este exemplo em particular, a tradução literal de (2) seria:
 
-Na tradução (2) o constituinte *every dwarf* desapareceu; ele foi contextualmente eliminado. Frege observa que uma expressão quantificada como *every dwarf* não dá origem a um conceito por si só — *eine selbständige Vorstellung* —, e só pode ser interpretada no contexto da tradução da sentença inteira. Considerando este exemplo em particular, a paráfrase literal de (2) é:
-
-> Todos os objetos do domínio de discurso têm a propriedade de ou não ser anões, ou ser objetos que amaram Goldilocks.
+> All objects in the domain of discourse have the property of either not being dwarves or
+being objects who loved Goldilocks.
 
 Nessa reformulação da sentença (1), o sintagma *every dwarf* não ocorre mais.
 
-As propriedades lógicas das sentenças que envolvem expressões quantificadas — e descrições, analisadas em termos de quantificadores — sugeriam, de fato, que o modo como um sintagma nominal simples, como um nome próprio, se combina com um predicado é logicamente diferente do modo como um sintagma nominal quantificado ou uma descrição definida se combina com um predicado. Isso levou à crença de que a forma linguística das expressões da língua natural era enganosa.
+As propriedades lógicas das sentenças que envolvem expressões quantificadas (e descrições, analisadas em termos de quantificadores) sugeriam, de fato, que o modo como um sintagma nominal simples, como um nome próprio, se combina com um predicado é logicamente diferente do modo como um sintagma nominal quantificado ou uma descrição definida se combina com um predicado. Isso levou à crença de que a forma linguística das expressões da língua natural era enganosa.
 
 A aplicação das ferramentas lógicas de abstração e redução do cálculo lambda nos permite ver que essa conclusão era injustificada. Traduzindo a língua natural em expressões de uma lógica tipada, veremos que os constituintes da língua natural correspondem a expressões tipadas que se combinam umas com as outras como funções e argumentos. Depois da redução completa dos resultados, as expressões quantificadas e outros constituintes podem ter sido contextualmente eliminados, mas essa eliminação é resultado do processo de redução, e não da suposta forma enganosa da sentença original. Assim, embora as traduções lógicas completamente reduzidas de sentenças da língua natural possam ser enganosas em algum sentido, as expressões originais, não reduzidas, não são.
 
-Como exemplo do modo como as ferramentas do cálculo lambda aplainam as aparências lógicas, considere a lógica da combinação de sujeitos e predicados. Nos casos mais simples — como *Goldilocks laughed* — poderíamos dizer que o predicado toma o sujeito como argumento. Mas isso não funciona para sujeitos quantificados, como em *no one laughed*. Tudo se resolve, porém, se dissermos que o sujeito sempre toma o predicado como seu argumento, e fizermos isso valer também para os sujeitos simples, elevando logicamente seu estatuto de argumento a função. Com expressões lambda isso é bastante fácil: traduzimos *Goldilocks* não como a constante `g`, e sim como a expressão `λP ↦ P g`. Essa expressão denota uma função de propriedades em valores de verdade, e pode portanto tomar a tradução de um predicado como argumento. A tradução de *no one* é do mesmo tipo:
-
-```display
-λP ↦ ¬∃x (Person x ∧ P x)
-```
+Como exemplo do modo como as ferramentas do cálculo lambda aplainam as aparências lógicas, considere a lógica da combinação de sujeitos e predicados. Nos casos mais simples — como *Goldilocks laughed* — poderíamos dizer que o predicado toma o sujeito como argumento. Mas isso não funciona para sujeitos quantificados, como em *no one laughed*. Tudo se resolve, porém, se dissermos que o sujeito sempre toma o predicado como seu argumento, e fizermos isso valer também para os sujeitos simples, elevando logicamente seu estatuto de argumento a função. Com expressões lambda isso é bastante fácil: traduzimos *Goldilocks* não como a constante `g`, e sim como a expressão `λP ↦ P g`. Essa expressão denota uma função de propriedades em valores de verdade, e pode portanto tomar a tradução de um predicado como argumento. A tradução de *no one* é do mesmo tipo `λP ↦ ¬∃x (Person x ∧ P x)`.
 
 Antes da redução, as traduções de *Goldilocks laughed* e de *no one laughed* se parecem muito. As semelhanças só desaparecem depois que as duas traduções são reduzidas às suas formas mais simples.
 
@@ -59,8 +47,6 @@ Em {ref "english-lf"}[FOL como linguagem de representação] demonstramos isso c
 
 :::dev "Claude Opus 5" (year := 2026)
 Comentário gerado por IA. Duas observações sobre a tradução desta seção.
-
-A epígrafe é atribuída, na fonte, a *Alice in Wonderland*; o diálogo com o Rei é de *Through the Looking-Glass*. A tradução manteve a atribuição da fonte — corrigi-la é decisão humana. A entrada `Bib.carroll1865` registra o título que a fonte cita.
 
 Os exemplos em inglês foram mantidos em inglês, como em todo o capítulo: eles são o objeto de estudo, e traduzi-los destruiria o argumento (*No one walked on the road* e *ninguém caminhou na estrada* não têm a mesma sintaxe). As paráfrases *sobre* os exemplos estão em português.
 :::
@@ -72,19 +58,20 @@ tag := "english-fragment"
 
 Suponha que queiramos escrever regras gramaticais para sentenças do inglês como as seguintes:
 
-1. The girl laughed.
-2. No dwarf admired some princess that shuddered.
-3. Every girl that some boy loved cheered.
-4. The wizard that helped Snow White defeated the giant.
+1. The girl laughed. ("A menina riu.")
+2. No dwarf admired some princess that shuddered. ("Nenhum anão admirou alguma princesa que estremeceu.")
+3. Every girl that some boy loved cheered. ("Toda menina que algum menino amou torceu.")
+4. The wizard that helped Snow White defeated the giant. ("O mago que ajudou Branca de Neve derrotou o gigante.")
 
 O que precisamos é de uma regra para a estrutura sujeito–predicado das sentenças, uma regra para a estrutura interna dos sintagmas nominais, uma regra para os substantivos comuns com ou sem orações relativas, e é mais ou menos só isso. A gramática a seguir dá conta dos exemplos:
 
 ```bnf
 S   ::= NP VP ;
-NP  ::= "Snow White" | "Alice" | "Dorothy" | "Goldilocks" | "Little Mook" | "Atreyu"
-      | "everyone" | "someone" | DET CN | DET RCN ;
+NP  ::= "Snow White" | "Alice" | "Dorothy" | "Goldilocks" | "Little Mook"
+      | "Atreyu" | "everyone" | "someone" | DET CN | DET RCN ;
 DET ::= "a" | "the" | "every" | "some" | "no" ;
-CN  ::= "girl" | "boy" | "princess" | "dwarf" | "giant" | "wizard" | "sword" | "dagger" ;
+CN  ::= "girl" | "boy" | "princess" | "dwarf" | "giant" | "wizard" | "sword"
+      | "dagger" ;
 ADJ ::= "fake" | "happy" | "evil" ;
 RCN ::= CN "that" VP | CN "that" NP TV | ADJ CN ;
 VP  ::= "laughed" | "cheered" | "shuddered" | TV NP | DV NP NP ;
@@ -253,10 +240,6 @@ def sent1 : Sent :=
 
 ```lean (name := sent1eval)
 #eval toString sent1
-```
-
-```leanOutput sent1eval
-"the dwarf that Snow White helped admired every princess"
 ```
 
 Ir da sentença de superfície para a árvore é o problema inverso, chamado de *análise sintática*. Não o trataremos aqui: neste capítulo as árvores são construídas à mão, e o que nos interessa é o que fazer com elas depois de construídas.
@@ -596,6 +579,8 @@ def boundIndices : LF → List Nat
   | .disj f1 f2 => boundIndices f1 ++ boundIndices f2
   | .forall_ v f => v.index ++ boundIndices f
   | .exists_ v f => v.index ++ boundIndices f
+
+-- #eval boundIndices (FOL.ExSchool.R FOL.tx FOL.ty) ~> [1]
 ```
 
 Para calcular um índice novo, basta escolher um índice fora dessa lista. Todas as variáveis são introduzidas pelo mesmo mecanismo: se começarmos com variáveis da forma `⟨"x", [0]⟩` e só introduzirmos variáveis novas da mesma forma, podemos supor que toda variável que ocorre na forma lógica tem esse feitio. O `0` inicial em `foldr max 0` garante que a lista sobre a qual tomamos o máximo não seja vazia.
