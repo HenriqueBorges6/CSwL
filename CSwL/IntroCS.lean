@@ -284,35 +284,21 @@ quatro possibilidades. Seu conhecimento cresceu pela eliminação de
 possibilidades.
 
 ::::exercise (rating := 1) (name := "possibilities")
-
-A ignorância completa sobre a verdade ou falsidade de dois fatos se modela como
-incerteza entre quatro possibilidades. Com dez fatos básicos, quantas
-possibilidades? E no caso geral de `n` fatos?
+A ignorância completa sobre a verdade ou falsidade de dois fatos se modela como incerteza entre quatro possibilidades. Com dez fatos básicos, quantas possibilidades? E no caso geral de `n` fatos?
 
 ```lean
 def possibilities : Nat → Nat
   | 0 => 1
   | n + 1 => 2 * possibilities n
-```
 
-```lean
-#eval possibilities 10
-```
-
-Em Lean, podemos provar propriedades sobre funções, embora óbvio para este caso,
-sabemos que a função `possibilities` computa basicamente a expressão $2^n$.
-No passo indutivo é preciso desdobrar a potência, e há
-dois lemas para isso: `Nat.pow_succ'` e `Nat.pow_succ`.
-
-```lean
 example (n : Nat) : possibilities n = 2 ^ n := by
  induction n with
   | zero => rfl
   | succ k ih => rw [possibilities, ih, Nat.pow_succ']
 ```
 
+Em Lean, podemos provar propriedades sobre funções, embora óbvio para este caso, sabemos que a função `possibilities` computa basicamente a expressão `2^n`. No passo indutivo é preciso desdobrar a potência, e há dois lemas para isso: `Nat.pow_succ'` e `Nat.pow_succ`.
 ::::
-
 
 Se você quiser apenas estudar a troca simples de informação factual, faz sentido
 concentrar-se no fragmento de língua natural que pode ser traduzido para a
@@ -398,60 +384,35 @@ das línguas humanas.
   em parte pelo contexto em que o sintagma é usado.
 
 ::::exercise (rating := 1) (name := "sentence-go-on")
+Pollard e Sag dão este exemplo de recursão no inglês.
 
-Pollard e Sag dão este exemplo de recursão que estende sentenças:
+- Sentences can go on.
+- Sentences can go on and on.
+- Sentences can go on and on and on.
+- Sentences can go on and on and on and on.
+- ...
 
-```
-Sentences can go on.
-Sentences can go on and on.
-Sentences can go on and on and on.
-Sentences can go on and on and on and on.
-...
-```
+Escreva um gerador de sentenças da forma acima. Seu gerador deve receber como parâmetro o número de repetições de "and on".
 
-Dê uma descrição concisa do padrão de recursão — isto é, escreva o gerador.
-`sentence n` deve produzir a sentença com `n` repetições de "and on".
-
-Uma observação que economiza tempo: a recursão *não* cabe direto em
-`sentence`, porque o ponto final tem de ficar sempre no fim. O que se repete é
-o pedaço `" and on"`, e é ele que merece a função recursiva. Por isso o
-esqueleto vem em duas partes.
-
-`andOn n` são as `n` repetições de `" and on"`, sem mais nada.
+A recursão *não* cabe direto em `sentence`, porque o ponto final tem de ficar sempre no fim. O que se repete é o pedaço `" and on"`, e é ele que merece a função recursiva. Por isso o esqueleto vem em duas partes. A função `andOn n` gera as `n` repetições. E a sentença é o começo, mais as repetições, mais o ponto.
 
 ```lean
 def andOn : Nat → String
   | 0 => ""
   | n + 1 => " and on" ++ andOn n
-```
 
-E a sentença é o começo, mais as repetições, mais o ponto.
-
-```lean
 def sentence (n : Nat) : String :=
   "Sentences can go on" ++ andOn n ++ "."
 ```
-
-```lean
-#eval sentence 2
-```
-
 ::::
 
 ::::quiz
-Há infinitas sentenças em inglês? Ou segue que
-sentenças em inglês podem ter comprimento infinito? Ou as duas coisas?
+Há infinitas sentenças em inglês? Ou as sentenças em inglês podem ter comprimento infinito? Ou as duas coisas?
 
 :::quizSolution
-De fato, segue-se do exemplo que há infinitas frases. Ainda assim, cada frase
-tem comprimento finito.
+De fato, segue-se do exemplo que há infinitas frases. Ainda assim, cada frase tem comprimento finito.
 
-Conjuntos finitos de coisas infinitas são diferentes de conjuntos infinitos de
-coisas finitas. O conjunto de frases da língua inglesa é um exemplo de um
-conjunto infinito de coisas finitas. Portanto, "As frases podem continuar
-indefinidamente" não significa que uma única frase possa continuar
-indefinidamente, mas sim que o processo de construir frases cada vez mais longas
-pode continuar indefinidamente.
+Conjuntos finitos de coisas infinitas são diferentes de conjuntos infinitos de coisas finitas. O conjunto de frases da língua inglesa é um exemplo de um conjunto infinito de coisas finitas. Portanto, uma única frase não pode ser infinita porque humanos sequer teriam capacidade de entende-la. Mas o processo de construir frases cada vez mais longas pode continuar indefinidamente, pela gramática do inglês.
 :::
 ::::
 

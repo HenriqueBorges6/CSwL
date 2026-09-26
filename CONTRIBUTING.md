@@ -69,6 +69,9 @@ issue. Those render as editorial notes and never reach the student.
 - Before opening it, check that what you touched still builds — `lake build
   CSwL.Sets` for a single chapter, `make all` if you changed the
   infrastructure or anything that affects the generated variants.
+- If you added, renamed or removed an exercise, update `CSwFP.yaml`. Run
+  `scripts/check-cswfp.py` (it needs PyYAML) whenever you touch an exercise
+  or the prose.
 - Delete the branch once it is merged.
 
 Commit messages follow [Conventional

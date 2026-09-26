@@ -77,7 +77,8 @@ up in the book**; everything you write must conform to them.
 - `STYLE-WRITING.md` — prose: the project's pedagogical decisions, writing
   advice, and the Portuguese conventions including the term list.
 
-`CONTRIBUTING.md` covers workflow. `DEVIATIONS.md` records what departs from
-CSwFP and why. In case of conflict, the style guides win on style and this
+`CONTRIBUTING.md` covers workflow. `CSwFP.yaml` maps each CSwFP section and
+exercise to where it went, and `DEVIATIONS.md` records what departs from CSwFP
+and why. In case of conflict, the style guides win on style and this
 file wins on project scope.
 

@@ -1,0 +1,274 @@
+# How CSwL uses CSwFP.
+#
+# `exercises` lists every CSwFP exercise, by chapter, with the page it is on.
+# The value is the CSwL exercise it became, as its `(name := …)`, or, when it
+# was not ported, the reason why. A reason is anything with a space in it; a
+# `TODO` reason is a decision still to be made.
+#
+# `original` lists the CSwL exercises that have no CSwFP counterpart, by file.
+# `depends` lists the exercises whose solution another exercise uses.
+#
+# `sections` says where each CSwFP section went, and why when the answer is
+# not simply the obvious chapter. Chapter names are the files under `CSwL/`.
+#
+# `scripts/check-cswfp.py` checks this file against the book.
+
+exercises:
+
+  CSwFP/1:
+    1.1 (p. 6): possibilities
+    1.2 (p. 8): sentence-go-on
+    1.3 (p. 8): turned into a quiz
+
+  CSwFP/2:
+    2.1 (p. 17): empty-subset
+    2.2 (p. 17): empty-vs-singleton
+    2.3 (p. 17): double-complement
+    2.4 (p. 18): cartesian-square
+    2.5 (p. 18): successor-composition
+    2.6 (p. 18): converse-subset
+    2.7 (p. 19): which-are-transitive
+    2.8 (p. 19): transitive-iff-comp
+    2.9 (p. 19): transitive-not-idempotent
+    2.10 (p. 21): successor-as-relation
+    2.11 (p. 21): leq-as-function
+    2.12 (p. 21): graph-is-functional
+    2.13 (p. 26): TODO, was `twice`, no longer in the book
+    2.14 (p. 26): in the prose of IntroL
+    2.15 (p. 28): TODO, typing of lambda terms, goes with 2.5 to English
+    2.16 (p. 28): in the prose of IntroL
+    2.17 (p. 30): TODO, was `adjective-types`, no longer in the book
+
+  CSwFP/3:
+    3.1 (p. 36): about Haskell itself
+    3.2 (p. 36): about Haskell itself
+    3.3 (p. 37): about Haskell itself
+    3.4 (p. 38): about Haskell itself
+    3.5 (p. 41): about Haskell itself
+    3.6 (p. 41): about Haskell itself
+    3.7 (p. 46): about Haskell itself
+    3.8 (p. 46): about Haskell itself
+    3.9 (p. 46): about Haskell itself
+    3.10 (p. 46): about Haskell itself
+    3.11 (p. 46): about Haskell itself
+    3.12 (p. 46): about Haskell itself
+    3.13 (p. 46): about Haskell itself
+    3.14 (p. 47): about Haskell itself
+    3.15 (p. 48): about Haskell itself
+    3.16 (p. 51): about Haskell itself
+    3.17 (p. 51): about Haskell itself
+    3.18 (p. 54): about Haskell itself  # the type of `vh`; worth reconsidering
+    3.19 (p. 61): yawelmani-harmony
+
+  CSwFP/4:
+    4.1 (p. 65): game-over-grammar
+    4.2 (p. 67): dropped with Mastermind
+    4.3 (p. 67): dropped with Mastermind
+    4.4 (p. 67): dropped with Mastermind
+    4.5 (p. 68): TODO
+    4.6 (p. 69): TODO
+    4.7 (p. 69): preposition-phrase        # pending #29
+    4.8 (p. 69): complex-relative-clauses  # pending #29
+    4.9 (p. 74): bangu-form
+    4.10 (p. 74): exclusive-or
+    4.11 (p. 74): needs Mathlib's ContextFreeGrammar
+    4.12 (p. 75): count-operators
+    4.13 (p. 75): formula-depth
+    4.14 (p. 75): collect-atoms
+    4.15 (p. 77): needs Mathlib's ContextFreeGrammar
+    4.16 (p. 77): needs Mathlib's ContextFreeGrammar
+    4.17 (p. 78): ex-fol-freevars
+    4.18 (p. 81): ex-fol-closedform
+    4.19 (p. 82): ex-fol-remove-impl_equiv
+    4.20 (p. 82): ex-fol-nnf
+    4.21 (p. 83): needs Mathlib's ContextFreeGrammar
+    4.22 (p. 84): ex-fol-vars-in-formula
+    4.23 (p. 84): ex-fol-free-vars-in-form
+    4.24 (p. 84): ex-fol-open-form
+
+  CSwFP/5:
+    5.1 (p. 90): add-ship
+    5.2 (p. 91): sunk
+    5.3 (p. 92): grice-maxims
+    5.4 (p. 92): valuations
+    5.5 (p. 93): in the prose of Logic/PL
+    5.6 (p. 93): ex-pl-satisfiable
+    5.7 (p. 93): ex-pl-equiv
+    5.8 (p. 93): pl-consequence
+    5.9 (p. 93): in the prose of Logic/PL
+    5.10 (p. 96): implies-from-list
+    5.11 (p. 96): in the prose of Logic/PL
+    5.12 (p. 96): in the prose of Logic/PL
+    5.13 (p. 97): dropped with Mastermind
+    5.14 (p. 97): dropped with Mastermind
+    5.15 (p. 100): dropped with Mastermind
+    5.16 (p. 100): dropped with Mastermind
+    5.17 (p. 102): ex-fol-weak-strong
+    5.18 (p. 102): ex-fol-translate
+    5.19 (p. 102): ex-fol-model
+    5.20 (p. 103): ex-fol-valid
+    5.21 (p. 103): an alternative definition the book does not need
+    5.22 (p. 103): an alternative definition the book does not need
+    5.23 (p. 104): in the prose of Logic/FOL
+    5.24 (p. 104): ex-fol-consequence
+    5.25 (p. 105): ex-fol-entails
+    5.26 (p. 106): TODO
+    5.27 (p. 106): TODO
+    5.28 (p. 109): soundness is within reach, completeness needs a model construction
+    5.29 (p. 109): soundness is within reach, completeness needs a model construction
+    5.30 (p. 110): TODO
+    5.31 (p. 110): TODO
+    5.32 (p. 115): TODO
+
+  CSwFP/6:
+    6.1 (p. 137): help-defeat             # pending #29
+    6.2 (p. 137): TODO
+    6.3 (p. 138): TODO
+    6.4 (p. 139): reflexive-ditransitive  # pending #29
+    6.5 (p. 141): TODO
+    6.6 (p. 146): TODO
+    6.7 (p. 147): check-sentence          # pending #29
+
+original:
+  IntroL.lean: [sum-of-squares, sum-to, sum-list, count-zeros]
+  Logic/Proof.lean:
+    - rfl-arithmetic
+    - de-morgan
+    - contrapositive
+    - exchange-prop
+    - implication-as-disj
+    - and-comm
+    - implication-transitivity
+    - unfold-direct-proof
+    - unfold-rw-conjunction
+    - dresses
+    - forall-exists-swap
+    - exists-witness
+  Logic/PL.lean:
+    - collect-atoms-alternative  # `names` without `mergeSort` and `eraseDups`
+    - ex-pl-contingent
+    - bangu-proof
+  Logic/FOL.lean:
+    - ex-fol-implies-from-list   # from the prose between 5.24 and 5.25
+  Sets.lean:
+    - five-in-above2
+    - one-not-in-above2
+    - above5-subset-above2
+    - union-contains
+    - intersection-contained
+  SeaBattle.lean: [defeated-last]
+  Morphology/Phonemes.lean: [append-suffix-text]
+  Morphology/SwedishPlural.lean: [swedish-plural]
+  InfEngine.lean: [inconsistent-kb, ferio]
+  English.lean: [fragment-translations]  # pending #29
+
+depends:
+  bangu-proof: bangu-form
+  pl-consequence: implies-from-list
+  ex-fol-entails: ex-fol-implies-from-list
+
+sections:
+
+  CSwFP/1:
+    1.1–1.6: IntroCS
+    1.7 Overview of the Book: omitted
+    1.8 Further Reading: omitted
+
+  CSwFP/2:
+    2.1 Sets and Set Notation: Sets
+    2.2 Relations: Sets
+    2.3 Functions:
+      to: IntroL
+      why: In Lean `A → B` is primitive, so functions come with the language.
+        That a function is a functional relation becomes a theorem in Sets.
+    2.4 Lambda calculus:
+      to: IntroL
+      why: With Lean already on screen, lambda calculus is the theory of what
+        the reader has just written. Its linguistic example goes to English.
+    2.5 Types in Grammar and Computation:
+      to: English
+      why: The semantic types e and t and the typing rules are about the
+        fragment, and are shown over its own types.
+    2.6 Functional Programming:
+      to: absorbed
+      why: It bridges to a programming language the reader has already seen.
+    2.7 Further reading: omitted
+
+  CSwFP/3:
+    3.1 The Programming Language Haskell: IntroL, merged with 3.2
+    3.2 Using the Book Code: IntroL, merged with 3.1
+    3.3 First Experiments: IntroL
+    3.4 Type Polymorphism: IntroL
+    3.5 Recursion: IntroL
+    3.6 List Types and List Comprehension: IntroL
+    3.7 List processing with map and filter: IntroL
+    3.8 Function Composition, Conjunction, Disjunction, Quantification: IntroL
+    3.9 Type Classes: IntroL
+    3.10 Strings and Texts: IntroL
+    3.11 Finnish Vowel Harmony:
+      to: Morphology
+      why: Split in two, FinnishVowelHarmony and SwedishPlural.
+    3.12 Identifiers in Haskell: omitted
+    3.13 User-defined Data Types and Pattern Matching:
+      to: IntroL
+      why: Its Subject/Predicate example goes to English, so that no fragment
+        of natural language appears before the one English builds.
+    3.14 Application, Representing Phonemes: Morphology
+    3.15 Further Reading: omitted
+
+  CSwFP/4:
+    4.1 Grammars for Games:
+      to: SeaBattle
+      why: Together with 5.1, syntax and semantics in one chapter. The
+        Mastermind grammar is dropped with 5.4.
+    4.2 A Fragment of English: English
+    4.3 A Language for Talking about Classes:
+      to: InfEngine
+      why: Together with 5.7, and after Sets, since the language is about sets.
+    4.4 Propositional Logic: Logic/PL
+    4.5 Predicate Logic: Logic/FOL
+    4.6 Predicate Logical Formulas in Haskell: Logic/FOL
+    4.7 Adding Function Symbols: Logic/FOL
+    4.8 Further Reading: omitted
+
+  CSwFP/5:
+    5.1 Semantics of Sea Battle: SeaBattle
+    5.2 Semantics of Propositional Logic: Logic/PL, merged with 5.3
+    5.3 Propositional Reasoning in Haskell: Logic/PL, merged with 5.2
+    5.4 Semantics of Mastermind:
+      to: dropped
+      why: Disconnected from Sea Battle, and it announces a semantics in
+        propositional logic that the implementation never uses.
+    5.5 Semantics of Predicate Logic:
+      to: Logic/FOL
+      why: The model is the four-vertex graph of Enderton, since the model of
+        6.3 belongs with the fragment it interprets.
+    5.6 Semantics of Natural Language Fragments: English
+    5.7 An Inference Engine with a Natural Language Interface:
+      to: InfEngine
+      why: The natural-language input, the only use of IO in the book, is not
+        ported.
+    5.8 Further Reading: omitted
+
+  CSwFP/6:
+    6.1 Linguistic Form and Translation Into Logic: English
+    6.2 Predicate Logic as Representation Language: English
+    6.3 Representing a Model for Predicate Logic: English
+    6.4 Evaluating Formulas in Models: English
+    6.5 Evaluating Formulas with Structured Terms:
+      to: Logic/FOL
+      why: It is about the evaluator, not the fragment. The evaluation over
+        `[0..]` becomes a theorem, since Lean is not lazy.
+    6.6 Further Reading: omitted
+
+  CSwFP/7 The Composition of Meaning in Natural Language: not yet taken up
+  CSwFP/8 Extension and Intension: not yet taken up
+  CSwFP/9 Parsing: not yet taken up
+  CSwFP/10 Handling Relations and Scoping: not yet taken up
+  CSwFP/11 Continuation Passing Style Semantics: not yet taken up
+  CSwFP/12 Discourse Representation and Context: not yet taken up
+  CSwFP/13 Communication as Informative Action: not yet taken up
+
+new:
+  Logic/Proof.lean: Proving in Lean, condensed from logic_and_proof. It comes
+    before PL and FOL so that neither has to teach tactics.

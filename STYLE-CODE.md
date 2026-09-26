@@ -10,9 +10,16 @@ code comments, commit messages — is in English.
 
 ## The hard constraint: nothing is used before it is presented
 
-`DEVIATIONS.md` states the rule that governs the whole book:
+One rule governs the whole book:
 
 > **Nothing is used before it is presented.**
+
+It has one loosening and one exception. The loosening: a basic type of Lean's
+own may be introduced where it is first needed, in a sentence or two with a
+citation of the Lean Language Reference (`{citep Bib.LLR}[]`), rather than in
+`IntroL`. `Fin` in `SeaBattle` is the case. This covers types the language
+already gives, never a construct this book defines, and never one that needs
+more than a short paragraph. The exception is `IntroCS`, described below.
 
 In a book whose chapters are largely programs rather than proofs, this covers
 **every Lean feature**, not only tactics: commands, declaration forms, syntax,
@@ -139,8 +146,9 @@ author decision, not a mechanical fix.
 `IntroCS` is the constraint's one accepted exception: it uses Lean that
 `IntroL` only presents later, deliberately, and the chapter says so where its
 first code block appears — the code is there to show where the book is going,
-nothing in it is presented, and reading it is optional. `DEVIATIONS.md`
-records the decision.
+nothing in it is presented, and reading it is optional. Without that sentence
+the chapter is not a teaser but an unannounced prerequisite. The exception does
+not extend to any other chapter.
 
 ## Verso markup
 
@@ -192,7 +200,7 @@ error rather than a dropped import.
 ### Exercises and solutions
 
 `:::exercise (rating := N) (name := "mnemonic")` — an exercise. `rating` is
-difficulty, 1 to 5. `name` is the identifier used by `PROVENANCE.md` and by
+difficulty, 1 to 5. `name` is the identifier used by `CSwFP.yaml` and by
 the grading variant, and follows the mnemonic rule.
 
 Inside an exercise, the answer is wrapped so the build variants can strip it:

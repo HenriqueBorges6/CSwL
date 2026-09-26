@@ -248,8 +248,7 @@ o que deixa essas instâncias alcançarem `NoClashes`/`ShipOK` sem esforço
 extra — uma `def` opaca escondia essa busca.
 
 Em vez de deixar as duas condições como testes externos que um estado
-pode ou não satisfazer — o que fazia o exercício `lineupOK` das versões
-anteriores deste capítulo —, podemos exigi-las já na definição do tipo:
+pode ou não satisfazer, podemos exigi-las já na definição do tipo:
 um `State` só existe se vier acompanhado da prova de que sua distribuição
 de navios as satisfaz. É o estilo idiomático de Lean — *proof-carrying
 data* —, em que a invariante não é algo a verificar depois, é parte do

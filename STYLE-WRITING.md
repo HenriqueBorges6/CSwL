@@ -26,11 +26,29 @@ has not read the book this one adapts and does not need to know Haskell. The
 book is self-contained: it never names sections, pages, or exercises of
 another work, and it never explains itself by contrast with one.
 
-`DEVIATIONS.md` draws the line precisely, and that discussion is not repeated
-here: a **technical consequence in Lean** is content, because the reader will
-meet it; an **editorial preference** is meta, and belongs in `DEVIATIONS.md`.
+The line to hold is not "never mention an alternative". It is:
+
+- a **technical consequence in Lean** is content, because the reader will
+  meet it. "A constructor holding a `List Formula` makes the type a nested
+  inductive, and a nested inductive has no `induction` tactic" states a fact
+  about Lean that the chapter then depends on;
+- an **editorial preference** is meta. "We preferred to keep `Game` as it is",
+  "the columns could have been modelled like the rows, but we chose the usual
+  convention" report what the authors decided, and belong in `DEVIATIONS.md`.
+
 The test is whether the sentence would still be worth writing if this book had
-no source and no alternatives.
+no source and no alternatives. A fact about Lean survives that; a preference
+does not. No search finds a sentence that fails it, so the prose has to be
+read; `scripts/check-cswfp.py` only catches the explicit cases, a citation of
+CSwFP or of a page, section or exercise number outside a `:::dev` note.
+
+**A translated section keeps the original's structure**: its section
+boundaries, its order, its sentence boundaries and its punctuation. Most
+chapters are mixed, part translated and part written here because Lean makes
+something sayable that the source could not say. A new section has a
+structure of its own, chosen for what it teaches. `CSwFP.yaml` records which
+CSwFP section each chapter takes, and `DEVIATIONS.md` records any departure
+from it and why.
 
 **The course is not about Lean.** Lean is introduced as far as the semantics
 needs it and no further. A feature that earns no work in a later chapter does
