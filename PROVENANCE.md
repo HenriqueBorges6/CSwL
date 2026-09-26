@@ -318,7 +318,6 @@ as an oversight.
 | `IntroL.lean`                   | `unfold-conjunction`       | 1      |
 | `IntroL.lean`                   | `exists-witness`           | 1      |
 | `IntroL.lean`                   | `cases-on-or`              | 1      |
-| `IntroL.lean`                   | `is-weekend`               | 1      |
 | `IntroL.lean`                   | `add-zero-induction`       | 1      |
 | `IntroL.lean`                   | `sum-to`                   | 1      |
 | `IntroL.lean`                   | `sum-list`                 | 1      |
@@ -349,7 +348,7 @@ existed inside chapters.
 |----------------------------|-----------------|------------------------------------------------------------|--------|
 | `IntroCS.lean`             | chapter opening | CSwFP/1 Formal Study of Natural Language                   | —      |
 | `IntroL.lean`              | Tipos indutivos | §3.13                                                      | 55     |
-| `IntroL.lean`              | Recursão        | §3.5                                                       | 40     |
+| `IntroL.lean`              | Casamento de Padrões, Recursão e Indução | §3.5                                  | 40     |
 | `IntroL.lean`              | Listas          | §3.6, and §3.4 for polymorphism                            | 41, 39 |
 | `IntroL.lean`              | `map`/`filter`  | §3.7, §3.8                                                 | 42–43  |
 | `IntroL.lean`              | Type classes    | §3.9                                                       | 45     |
