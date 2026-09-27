@@ -33,7 +33,9 @@ We will not name files or sections with numbers, precisely because during the pr
 
 We still need to investigate the auto-grading approach.
 
-Using Verso, we could also create slides; see https://github.com/arademaker/sviL-hackathon-2026. But we will not use this resource now. Students are intended to read the book online. From the student variant, we will make the HTML and Lean Source available at https://github.com/emap-nlp/book. During class, the instructor will open the Lean code for the `terse` variant in VS Code; the class will use this material.
+Using Verso, we could also create slides; see https://github.com/arademaker/sviL-hackathon-2026. But we will not use this resource now. Readers are intended to read the `student` variant online; the instructor teaches from the `terse` variant.
+
+CSwL is independent of any course that uses it. Nothing about a particular course, its repositories or its organization is written into any versioned file of CSwL.
 
 # English vs Portuguese 
 

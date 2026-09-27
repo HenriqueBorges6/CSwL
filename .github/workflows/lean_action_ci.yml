@@ -4,6 +4,12 @@
 # `pages.yml`, which builds everything and publishes the site — two
 # workflows doing the same build on the same event would waste runner
 # time.
+#
+# The build reuses the Lake cache that `pages.yml` saves on `main`, and never
+# saves one of its own. That cache holds what Mathlib's cache does not: the
+# compiled C objects of every Mathlib module, which linking an executable
+# needs. Each cache is a few gigabytes against a 10 GB limit per repository,
+# so a cache saved per pull request would evict the one on `main`.
 name: Lean Action CI
 
 on:
@@ -16,4 +22,41 @@ jobs:
 
     steps:
       - uses: actions/checkout@v5
+
+      # Installs elan and the toolchain named in `lean-toolchain`. The build
+      # and both caches are handled in the steps below, as in `pages.yml`.
       - uses: leanprover/lean-action@v1
+        with:
+          build: false
+          test: false
+          use-mathlib-cache: false
+          use-github-cache: false
+
+      # The same key as `pages.yml`, which saves it on `main`.
+      - name: Restore Lake cache
+        uses: actions/cache/restore@v5
+        with:
+          path: .lake
+          key: lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ github.sha }}
+          restore-keys: lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}
+
+      # A half-cached package (with no usable `.git`) makes Lake fail to
+      # resolve dependencies; it's cheaper to re-clone.
+      - name: Remove corrupted cached packages
+        run: |
+          if [ -d .lake/packages ]; then
+            find .lake/packages -mindepth 1 -maxdepth 1 -type d | while read -r package; do
+              if ! git -C "$package" rev-parse HEAD >/dev/null 2>&1; then
+                echo "Removing corrupted cached package: $package"
+                rm -rf "$package"
+              fi
+            done
+          fi
+
+      - name: Mathlib cache
+        run: lake exe cache get
+
+      - name: Build
+        run: |
+          lake build
+          lake build cswl-book

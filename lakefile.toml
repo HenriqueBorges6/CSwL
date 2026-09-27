@@ -129,7 +129,7 @@ rev = "4ac03644305a17f32139766b9ceb625ad046b85e"
 # its own since `build-web.sh` was retired (08/16); it stayed out of active
 # use until the scope question (`CSwL:docs` only documents the empty lib;
 # `Book:docs` brings in all of Mathlib) is resolved -- see
-# https://github.com/emap-nlp/CSwL/issues/1.
+# https://github.com/cslib-community/CSwL/issues/1.
 #
 # Tao declares this dependency only in the "dev" environment
 # (`meta if get_config? env = some "dev" then require ...` in

@@ -1,10 +1,11 @@
-# Publishes the book's `student` variant to GitHub Pages:
+# Builds the `student` and `terse` variants of the book, publishes `terse`
+# to GitHub Pages, and publishes both as the `latest` release.
 #
-#   <pages>/            the book (Verso, `Manual` genre) — `lake exe cswl-book student`
+#   <pages>/            the `terse` variant (Verso, `Manual` genre)
 #
-# `student` (full prose, answer keys elided as `sorry`) is the variant
-# published here — it's the one meant for a public audience; `solutions`
-# would leak answer keys before submissions are due. API docs (doc-gen4)
+# `student` is the variant meant for readers, and a course can serve it from
+# the release; this site carries `terse`, the lecture cut. Neither shows
+# answer keys: `solutions` and `grading` are never published. API docs (doc-gen4)
 # are intentionally left out for now — see the scope issue tracked at
 # https://github.com/cslib-community/CSwL/issues/1.
 #
@@ -63,7 +64,7 @@ jobs:
       # action saves the cache BEFORE the site is generated: Verso's
       # artifacts would never be cached.
       - name: Restore Lake cache
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           path: .lake
           key: lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ github.sha }}
@@ -87,34 +88,38 @@ jobs:
       - name: Mathlib cache
         run: lake exe cache get
 
-      - name: Build the book (student variant)
+      - name: Build the book (student and terse variants)
         id: build-site
         run: |
           lake build cswl-book
           lake exe cswl-book student
+          lake exe cswl-book terse
           mkdir -p _site
-          cp -r _out/student/html/. _site
+          cp -r _out/terse/html/. _site
 
       - name: Save Lake cache
         if: success()
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         with:
           path: .lake
           key: lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ github.sha }}
 
       - name: Upload the Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: _site
 
-      # Also handed to the `release` job below, so the `book` repo
-      # (github.com/emap-nlp/book) can pick up the same build without
-      # rebuilding it — see that job's comment.
-      - name: Upload the student build (lean + html)
-        uses: actions/upload-artifact@v4
+      # Also handed to the `release` job below — see that job's comment.
+      # `include-hidden-files`, because each generated project's `.gitignore`
+      # is what keeps `.lake/` out of the students' commits.
+      - name: Upload the variants (lean + html)
+        uses: actions/upload-artifact@v6
         with:
-          name: student-build
-          path: _out/student
+          name: variants
+          path: |
+            _out/student
+            _out/terse
+          include-hidden-files: true
           retention-days: 1
 
   deploy:
@@ -129,15 +134,14 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
 
-  # Publishes the same `student` build as a GitHub release in this repo, so
-  # that `github.com/emap-nlp/book` can fetch it (a public download, no
-  # credentials needed) and republish it on its own `main` (lean/) and
-  # `gh-pages` (html/) branches without rebuilding — see that repo's
-  # `.github/workflows/sync-from-cswl.yml`. `student-latest` is a moving
-  # tag: each run deletes and recreates it, so `book` always has one place
-  # to look.
+  # Publishes the variants as the `latest` release of this repo, one
+  # `<variant>-lean.tar.gz` and one `<variant>-html.tar.gz` each, plus
+  # `commit.txt`, the CSwL commit they were built from. Anyone can fetch it
+  # (a public download, no credentials needed) and republish a variant
+  # without building it. `latest` is a moving tag: each run deletes and
+  # recreates it, so there is always one place to look.
   release:
     needs: build
     runs-on: ubuntu-latest
@@ -145,23 +149,27 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v7
         with:
-          name: student-build
-          path: _out/student
+          name: variants
+          path: _out
 
-      - name: Package the build
+      - name: Package the variants
         run: |
-          echo "${{ github.sha }}" > meta.txt
-          tar -czf lean.tar.gz -C _out/student/lean .
-          tar -czf html.tar.gz -C _out/student/html .
+          echo "${{ github.sha }}" > commit.txt
+          for variant in student terse; do
+            for part in lean html; do
+              tar -czf "$variant-$part.tar.gz" --exclude=.lake -C "_out/$variant/$part" .
+            done
+          done
 
-      - name: Publish the student-latest release
+      - name: Publish the latest release
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
         run: |
+          gh release delete latest --yes --cleanup-tag || true
           gh release delete student-latest --yes --cleanup-tag || true
-          gh release create student-latest lean.tar.gz html.tar.gz meta.txt \
-            --title "Student build (latest)" \
-            --notes "Auto-published student build from commit ${{ github.sha }}."
+          gh release create latest ./*.tar.gz commit.txt \
+            --title "Latest build" \
+            --notes "The student and terse variants, built from commit ${{ github.sha }}."

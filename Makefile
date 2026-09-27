@@ -26,7 +26,7 @@
 # chapters are already in the `Manual` genre, and the book is only built
 # from here.
 
-.PHONY: all student solutions terse grading build serve clean publish-book
+.PHONY: all student solutions terse grading build serve clean lecture
 
 default: all
 
@@ -59,9 +59,20 @@ serve: all
 clean:
 	rm -rf _out/
 
-# Publishes an already-built _out/student/ to the `book` repository (a sibling
-# checkout, `../book` by default): lean/ goes to the main branch, html/ to
-# gh-pages. It does not depend on `student` — run `make student` first;
-# publish-book only syncs and pushes what has already been built.
-publish-book:
-	scripts/publish-book.sh
+# Copies the `terse` Lake project to a working directory outside the
+# repository, `../lecture` by default (`make lecture LECTURE=<dir>` for another), for
+# the instructor to open in VS Code in class, and builds it. The directory is
+# a local git repository and is never published: commit in it after each
+# class to keep what was written there. The target refuses to overwrite
+# changes that are not committed.
+LECTURE ?= ../lecture
+
+lecture: terse
+	@if [ -d "$(LECTURE)/.git" ] && [ -n "$$(git -C "$(LECTURE)" status --porcelain)" ]; then \
+	  echo "error: $(LECTURE) has uncommitted changes; commit or discard them first" >&2; \
+	  exit 1; \
+	fi
+	mkdir -p "$(LECTURE)"
+	rsync -a --delete --exclude=.git --exclude=.lake _out/terse/lean/ "$(LECTURE)/"
+	[ -d "$(LECTURE)/.git" ] || git -C "$(LECTURE)" init --quiet
+	cd "$(LECTURE)" && lake exe cache get && lake build

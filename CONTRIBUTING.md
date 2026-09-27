@@ -78,6 +78,41 @@ Commit messages follow [Conventional
 Commits](https://www.conventionalcommits.org/): `feat:`, `fix:`, `docs:`,
 `refactor:`, with an optional scope — `docs(readme): …`, `fix(logic): …`.
 
+## Continuous integration and caches
+
+Two workflows build the book. `lean_action_ci.yml` checks every pull request;
+`pages.yml` runs on `main`, publishes the site and the `latest` release, and
+saves the Lake cache. How fast they are depends on two different caches.
+
+**Mathlib's cache.** `lake exe cache get` downloads Mathlib's compiled
+`.olean` files, which is all Lean needs to check code that imports Mathlib.
+It does not hold compiled C.
+
+**Why that is not enough.** `cswl` and `cswl-book` are executables, and
+linking an executable needs every module it imports, Mathlib's included,
+translated to C and compiled to a `.c.o` object. The first build of an
+executable therefore compiles some 2,700 Mathlib modules to C, which takes
+over ten minutes on a runner. Locally this is paid once, since `.lake/` stays
+on disk.
+
+**The GitHub Actions cache.** To pay it once on CI too, `pages.yml` saves the
+whole `.lake/` directory, objects included, and both workflows restore it.
+Three rules of that cache shape the workflows:
+
+- **10 GB per repository.** A saved `.lake/` is close to 3 GB. Past the limit,
+  GitHub evicts the least recently used caches.
+- **Scoped by branch.** A cache saved in a pull request serves only that pull
+  request; a pull request can also read the caches of `main`.
+- **Matched by key and configuration.** A cache is found only under the same
+  key, and only if it was saved with the same paths and compression.
+
+So only `main` saves a cache, and pull requests restore it with the same key
+and never save one of their own: a cache per pull request would serve no
+other branch and would evict the one on `main`. A pull request then rebuilds
+only what differs from `main`. The first build after a change to
+`lean-toolchain` or `lake-manifest.json` is slow again, on `main` and on the
+pull requests that follow, until `pages.yml` saves a new cache.
+
 ## Editing the right file
 
 The book's sources are the Lean files under `CSwL/`. Everything under `_out/`
